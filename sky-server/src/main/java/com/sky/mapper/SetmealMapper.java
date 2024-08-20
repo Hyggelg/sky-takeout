@@ -1,7 +1,10 @@
 package com.sky.mapper;
 
-import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface SetmealMapper {
@@ -13,6 +16,7 @@ public interface SetmealMapper {
      * @param: [id]
      * @return: java.lang.Integer
      **/
-    @Delete("select count(id) from setmeal where category_id = #{categoryId}")
+    @Select("select count(id) from setmeal where category_id = #{categoryId}")
     Integer countByCategoryId(Long id);
+
 }
