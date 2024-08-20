@@ -43,10 +43,10 @@ sky:
     # 设置前端传递过来的令牌名称
     admin-token-name: token
   aliyun:
-    endpoint: https://oss-cn-hangzhou.aliyuncs.com
-    access-key-id: LTAI5tDV8aHnshyMcr2tu1ja
-    access-key-secret: VLCzgkX6wpPxR0qolgfmjSA0gS5DQg
-    bucket-name: web-tlias-liangguang
+    endpoint: ${sky.aliyun.endpoint}
+    access-key-id: ${sky.aliyun.access-key-id}
+    access-key-secret: ${sky.aliyun.access-key-secret}
+    bucket-name: ${sky.aliyun.bucket-name}
 
 
 
