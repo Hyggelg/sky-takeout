@@ -18,22 +18,26 @@ import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 
 /**
- * @description:    自定义切面，实现公共字段自动填充处理逻辑
+ * @description: 自定义切面，实现公共字段自动填充处理逻辑
  * @author: liangguang
  * @date: 2024/8/11 0011 16:17
  * @param:
  * @return:
  **/
 
-@Aspect
+@Aspect      //声明一个切面
 @Component
 @Slf4j
 public class AutoFillAspect {
     /*
-     * @description:    切入点
+     * @description:    指定切入点
      **/
     @Pointcut("execution(* com.sky.mapper.*.*(..)) && @annotation(com.sky.annotation.AutoFill)")
-    public void autoFillPointCut(){}
+    public void autoFillPointCut() {
+    }
+    //@Pointcut用于定义一个切面表达式，这个切点表达式的作用是匹配满足特定条件的方法执行点。
+    //execution(* com.sky.mapper.*.*(..))：这部分表示匹配com.sky.mapper包及其子包下的任何返回类型的任何方法（第一个星号表示返回类型任意，后面的两个星号分别表示包内的任何类和任何方法名，括号里的两个点表示方法可以接受任意数量和类型的参数）。
+    //&& @annotation(com.sky.annotation.AutoFill)：这部分表示并且方法上带有com.sky.annotation.AutoFill注解
 
     /**
      * 前置通知，在通知中进行公共字段的赋值
@@ -49,7 +53,7 @@ public class AutoFillAspect {
 
         //获取到当前被拦截的方法的参数--实体对象
         Object[] args = joinPoint.getArgs();
-        if(args == null || args.length == 0){
+        if (args == null || args.length == 0) {
             return;
         }
         Object entity = args[0];
@@ -59,7 +63,7 @@ public class AutoFillAspect {
         Long currentId = BaseContext.getCurrentId();
 
         //根据当前不同的操作类型，为对应的属性通过反射来赋值
-        if(operationType == OperationType.INSERT){
+        if (operationType == OperationType.INSERT) {
             //为四个公共字段赋值
             try {
                 Method setCreateTime = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_CREATE_TIME, LocalDateTime.class);

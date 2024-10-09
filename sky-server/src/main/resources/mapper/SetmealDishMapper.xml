@@ -11,14 +11,21 @@
     </insert>
 
     <select id="getSetmealIdsByDishIds" resultType="java.lang.Long">
-        select setmeal_id from setmeal_dish where dish_id in
-        <foreach collection="ids" item="dishId" separator="," open="(" close=")">
-            #{dishId}
+        select setmeal_id
+        from setmeal_dish where dish_id in
+        <foreach collection="ids" separator="," item="item" open="(" close=")">
+            #{item}
         </foreach>
     </select>
 
     <!--    删除套餐餐品关系表中的数据-->
     <delete id="deleteBySetmaleId">
+        delete
+        from setmeal_dish
+        where setmeal_id=#{id};
+    </delete>
+
+    <delete id="deleteBySetmealId">
         delete
         from setmeal_dish
         where setmeal_id=#{id};

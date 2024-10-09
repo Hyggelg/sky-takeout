@@ -6,13 +6,23 @@ sky:
     database: sky_take_out
     username: root
     password: 123456
-  aliyun:
-    endpoint: https://oss-cn-hangzhou.aliyuncs.com
-    access-key-id: LTAI5tDV8aHnshyMcr2tu1ja
-    access-key-secret: VLCzgkX6wpPxR0qolgfmjSA0gS5DQg
-    bucket-name: web-tlias-liangguang
+  alioss:
+    endpoint: oss-cn-hangzhou.aliyuncs.com
+    accessKeyId:
+    accessKeySecret:
+    bucketName: web-tlias-liangguang
   redis:
     host: localhost
     port: 6379
     password: 123456
     database: 1
+  wechat:
+    appid: wx950705b85b5737c8
+    secret: 84f83ed29d7fc66d434f0e2872c94a1e
+    mchid:
+    mchSerialNo:
+    privateKeyFilePath:
+    apiV3Key:
+    weChatPayCertFilePath:
+    notifyUrl:
+    refundNotifyUrl:

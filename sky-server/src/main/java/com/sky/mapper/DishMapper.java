@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface DishMapper {
@@ -70,4 +71,22 @@ public interface DishMapper {
     void update(Dish dish);
 
     List<Dish> getBySetmealId(Long id);
+
+    /**
+     * @description:    动态条件查询菜品
+     * @author: liangguang
+     * @date: 2024/8/26 0026 11:41
+     * @param: [dish]
+     * @return: java.util.List<com.sky.entity.Dish>
+     **/
+    List<Dish> list(Dish dish);
+
+    /**
+     * @description:    查询菜品总览
+     * @author: liangguang
+     * @date: 2024/9/22 0022 22:53
+     * @param: [map]
+     * @return: java.lang.Integer
+     **/
+    Integer countByMap(Map map);
 }

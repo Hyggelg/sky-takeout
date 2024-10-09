@@ -1,8 +1,10 @@
 package com.sky.controller.admin;
 
+import com.sky.constant.MessageConstant;
 import com.sky.result.Result;
-import com.sky.utils.AliOSSUtils;
+import com.sky.utils.AliOssUtil;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,36 +13,43 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.UUID;
 
 /**
- * @description:    通用接口
- * @author: liangguang
- * @date: 2024/8/14 0014 18:24
- * @param:
- * @return:
- **/
-@RestController
+ * 通用接口
+ */
+@RestController("adminCommonController")
 @RequestMapping("/admin/common")
 @Api(tags = "通用接口")
 @Slf4j
 public class CommonController {
 
     @Autowired
-    private AliOSSUtils aliOSSUtils;
+    private AliOssUtil aliOssUtil;
 
-    /**
-     * @description:    文件上传
-     * @author: liangguang
-     * @date: 2024/8/14 0014 18:27
-     * @param: [file]
-     * @return: com.sky.result.Result<java.lang.String>
-     **/
     @PostMapping("/upload")
-    public Result upload(MultipartFile file) throws IOException {
-        log.info("文件上传: {}", file.getOriginalFilename());
-        //调用阿里云OSS工具类进行文件上传
-        String url = aliOSSUtils.upload(file);
-        log.info("文件上传成功,文件访问的url: {}",url);
-        return Result.success(url);
+    @ApiOperation("文件上传")
+    public Result<String> upload(MultipartFile file) {
+        log.info("文件上传：{}", file);
+
+        try {
+//        原始文件名
+            String originalFilename = file.getOriginalFilename();
+
+//        截取原始文件名的后缀
+            String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+
+//        构造新文件名称
+            String objectName = UUID.randomUUID().toString() + extension;
+
+//        文件的请求路径
+            String filePath = aliOssUtil.upload(file.getBytes(), objectName);
+            return Result.success(filePath);
+        } catch (IOException e) {
+            log.error("文件删除失败：{}", e);
+        }
+
+        return Result.error(MessageConstant.UPLOAD_FAILED);
     }
+
 }
